@@ -3,6 +3,8 @@ import threading
 import keyboard
 import pygame.mixer
 
+tmp = []
+
 
 def playSound(s: pygame.mixer.Sound):
     s.play()
@@ -10,9 +12,13 @@ def playSound(s: pygame.mixer.Sound):
 
 def hook(event: keyboard.KeyboardEvent):
     if event.event_type == "down":
+        if event.name in tmp:
+            return
         press()
+        tmp.append(event.name)
     else:
         release()
+        tmp.remove(event.name)
 
 
 def press():
